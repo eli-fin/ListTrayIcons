@@ -1,0 +1,64 @@
+﻿<Window x:Class="ListTrayIcons.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="1000"
+        Loaded="RefreshBtn_Click"
+        Keyboard.KeyDown="Window_KeyDown">
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top" ToolBarTray.IsLocked="True">
+            <ToolBar Loaded="ToolBar_Loaded">
+                <Button BorderBrush="LightBlue" ToolBar.OverflowMode="Never" x:Name="refreshBtn" Content="Refresh (F5)" Click="RefreshBtn_Click"/>
+                <Button BorderBrush="LightBlue" ToolBar.OverflowMode="Never" x:Name="infoBtn" Content="Info" Click="InfoBtn_Click"/>
+                <Button BorderBrush="LightBlue" ToolBar.OverflowMode="Never" x:Name="exitBtn" Content="Exit (ESC)" Click="ExitBtn_Click"/>
+            </ToolBar>
+        </ToolBarTray>
+        <Grid>
+            <DataGrid x:Name="TrayInfoListBox" AutoGenerateColumns="False"  IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Icon">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="#E0E0E0">
+                                    <!-- not white, so white icons are also visible -->
+                                    <Image Source="{Binding Path=Bitmap}" Height="25" VerticalAlignment="Center"/>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Hidden">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=IsHidden}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="PID">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PID}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Process name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=FileName}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Tool Tip" Width="*">
+                        <!-- Take up the rest of the width, instead of another empty column being created-->
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Path=ToolTip}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DockPanel>
+</Window>
